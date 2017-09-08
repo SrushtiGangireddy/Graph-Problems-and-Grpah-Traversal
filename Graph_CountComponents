@@ -1,0 +1,73 @@
+import java.io.*;
+import java.util.*;
+import java.util.Scanner;
+
+public class CountComponents {
+	
+	public static void main(String[] args){
+		
+		Scanner sc = new Scanner(System.in);
+		
+		System.out.println("Enter the number of vertices");
+		int ver = sc.nextInt();
+		
+		System.out.println("Enter the number of edges");
+		int e = sc.nextInt();
+		
+		int[][] edges = new int[e][2];
+		
+		for(int i=0;i<e;i++){
+			
+			System.out.println("Enter the edges: <to> and <from>");
+			
+			int u = sc.nextInt();
+			int v = sc.nextInt();
+			
+			edges[i][0] = u;
+			edges[i][1] = v;
+			
+		}
+		
+		CountComponents cc = new CountComponents();
+		
+		System.out.println(cc.countComp(ver,edges));
+		
+	}
+	
+	public int countComp(int n,int[][] edges){
+		
+		int count = n;
+		
+		int[] root = new int[n];
+		
+		for(int i=0; i<n; i++){
+	        root[i]=i;        
+	    }
+		
+		for(int i=0; i<edges.length; i++){
+	        int x = edges[i][0];
+	        int y = edges[i][1];
+	 
+	        int xRoot = getRoot(root, x);
+	        int yRoot = getRoot(root, y);
+	 
+	        if(xRoot!=yRoot){
+	            count--;
+	            root[xRoot]=yRoot;
+	        }
+	 
+	    }
+	 
+	    return count;
+		
+	}
+	
+	public int getRoot(int[] arr, int i){
+	    while(arr[i]!=i){
+	        arr[i]= arr[arr[i]];
+	        i=arr[i];
+	    }
+	    return i;
+	}
+
+}
